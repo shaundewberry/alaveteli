@@ -8,7 +8,7 @@ describe WidgetsController do
   describe 'GET show' do
 
     before do
-      @info_request = FactoryGirl.create(:info_request)
+      @info_request = FactoryBot.create(:info_request)
       allow(AlaveteliConfiguration).to receive(:enable_widgets).and_return(true)
     end
 
@@ -38,7 +38,7 @@ describe WidgetsController do
 
       track = TrackThing.create_track_for_request(@info_request)
       track.track_medium = 'email_daily'
-      track.tracking_user = FactoryGirl.create(:user)
+      track.tracking_user = FactoryBot.create(:user)
       track.save!
 
       3.times do
@@ -61,7 +61,7 @@ describe WidgetsController do
     end
 
     it 'sets user_owns_request to false if the user does not own the request' do
-      session[:user_id] = FactoryGirl.create(:user).id
+      session[:user_id] = FactoryBot.create(:user).id
       get :show, :request_id => @info_request.id
       expect(assigns[:user_owns_request]).to be false
     end
@@ -80,7 +80,7 @@ describe WidgetsController do
       end
 
       it 'finds existing votes' do
-        vote = FactoryGirl.create(:widget_vote,
+        vote = FactoryBot.create(:widget_vote,
                                   :info_request => @info_request,
                                   :cookie => mock_cookie)
         request.cookies['widget_vote'] = vote.cookie
@@ -116,7 +116,7 @@ describe WidgetsController do
     context 'for a logged in user with tracks' do
 
       it 'finds the existing track thing' do
-        user = FactoryGirl.create(:user)
+        user = FactoryBot.create(:user)
         track = TrackThing.create_track_for_request(@info_request)
         track.track_medium = 'email_daily'
         track.tracking_user = user
@@ -134,7 +134,7 @@ describe WidgetsController do
 
       it 'does not find existing track things' do
         TrackThing.delete_all
-        user = FactoryGirl.create(:user)
+        user = FactoryBot.create(:user)
         session[:user_id] = user.id
 
         get :show, :request_id => @info_request.id
@@ -144,7 +144,7 @@ describe WidgetsController do
 
       it 'looks for an existing vote' do
         TrackThing.delete_all
-        vote = FactoryGirl.create(:widget_vote,
+        vote = FactoryBot.create(:widget_vote,
                                   :info_request => @info_request,
                                   :cookie => mock_cookie)
         session[:user_id] = @info_request.user.id
@@ -188,7 +188,7 @@ describe WidgetsController do
       end
 
       it 'does not look for an existing vote' do
-        vote = FactoryGirl.create(:widget_vote,
+        vote = FactoryBot.create(:widget_vote,
                                   :info_request => @info_request,
                                   :cookie => mock_cookie)
         session[:user_id] = @info_request.user.id
@@ -205,7 +205,7 @@ describe WidgetsController do
   describe 'GET new' do
 
     before do
-      @info_request = FactoryGirl.create(:info_request)
+      @info_request = FactoryBot.create(:info_request)
       allow(AlaveteliConfiguration).to receive(:enable_widgets).and_return(true)
     end
 

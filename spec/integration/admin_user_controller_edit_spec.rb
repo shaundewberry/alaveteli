@@ -9,7 +9,7 @@ describe 'Editing a User' do
     confirm(:admin_user)
     @admin = login(:admin_user)
 
-    @user = FactoryGirl.create(:user,
+    @user = FactoryBot.create(:user,
                                :name => 'nasty user 123',
                                :ban_text => 'You are banned')
   end

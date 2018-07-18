@@ -3,18 +3,18 @@ require File.expand_path(File.join('..', '..', '..', 'spec_helper'), __FILE__)
 
 describe "request/show" do
 
-  let(:mock_body) { FactoryGirl.create(:public_body, :name => "test body") }
+  let(:mock_body) { FactoryBot.create(:public_body, :name => "test body") }
 
   let(:mock_user) do
-    FactoryGirl.create(:user, :name => "test user",
+    FactoryBot.create(:user, :name => "test user",
                               :url_name => "test_user",
                               :profile_photo => nil)
   end
 
-  let(:admin_user) { FactoryGirl.create(:admin_user) }
+  let(:admin_user) { FactoryBot.create(:admin_user) }
 
   let(:mock_request) do
-    FactoryGirl.create(:info_request, :title => "Test request",
+    FactoryBot.create(:info_request, :title => "Test request",
                                       :public_body => mock_body,
                                       :user => mock_user)
   end
@@ -72,7 +72,7 @@ describe "request/show" do
       end
 
       context "and there is a last response" do
-        let(:mock_response) { FactoryGirl.create(:incoming_message) }
+        let(:mock_response) { FactoryBot.create(:incoming_message) }
 
         it "should show a link to follow up the last response with clarification" do
           allow(mock_request).to receive(:get_last_public_response).
@@ -200,7 +200,7 @@ describe "request/show" do
 
   describe "censoring attachment names" do
     let(:request_with_attachment) do
-      FactoryGirl.create(:info_request_with_html_attachment)
+      FactoryBot.create(:info_request_with_html_attachment)
     end
 
     before do

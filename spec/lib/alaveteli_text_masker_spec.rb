@@ -10,13 +10,13 @@ describe AlaveteliTextMasker do
     context 'applying censor rules' do
 
       before do
-        @cheese_censor_rule = FactoryGirl.build(:censor_rule,
+        @cheese_censor_rule = FactoryBot.build(:censor_rule,
                                                 :text => 'Stilton',
                                                 :replacement => 'Jarlsberg')
-        @colour_censor_rule = FactoryGirl.build(:censor_rule,
+        @colour_censor_rule = FactoryBot.build(:censor_rule,
                                                 :text => 'blue',
                                                 :replacement => 'yellow')
-        @regex_censor_rule = FactoryGirl.build(:censor_rule,
+        @regex_censor_rule = FactoryBot.build(:censor_rule,
                                                :text => 'm[a-z][a-z][a-z]e',
                                                :replacement => 'cat',
                                                :regexp => true)
@@ -197,7 +197,7 @@ describe AlaveteliTextMasker do
         data = "here is a mouse"
         expected = "here is a cat"
 
-        censor_rule = FactoryGirl.build(:censor_rule,
+        censor_rule = FactoryBot.build(:censor_rule,
                                         :text => 'mouse',
                                         :replacement => 'cat')
 

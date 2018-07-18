@@ -9,7 +9,7 @@ describe AlaveteliPro::ActivityList::List do
     end
 
     it 'assigns the user, page and per_page arguments' do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       list = described_class.new(user, 1, 10)
       expect(list.user).to eq user
       expect(list.page).to eq 1
@@ -19,7 +19,7 @@ describe AlaveteliPro::ActivityList::List do
   end
 
   describe '#event_types' do
-    let(:user){ FactoryGirl.create(:user) }
+    let(:user){ FactoryBot.create(:user) }
 
     it 'returns an array' do
       expect(described_class.new(user, 1, 10).event_types.class).to eq Array
@@ -37,9 +37,9 @@ describe AlaveteliPro::ActivityList::List do
 
     it "returns the user's info_request_events if
         included in the event types" do
-      user = FactoryGirl.create(:user)
-      info_request = FactoryGirl.create(:info_request, :user => user)
-      edit_event = FactoryGirl.create(:edit_event,
+      user = FactoryBot.create(:user)
+      info_request = FactoryBot.create(:info_request, :user => user)
+      edit_event = FactoryBot.create(:edit_event,
                                       :info_request => info_request)
       list = described_class.new(user, 1, 10)
       expect(list.events).
@@ -51,13 +51,13 @@ describe AlaveteliPro::ActivityList::List do
   describe '#current_items' do
 
     it 'returns an array of items representing the current page of events' do
-      user = FactoryGirl.create(:user)
-      info_request = FactoryGirl.create(:info_request, :user => user)
-      response_event = FactoryGirl.create(:response_event,
+      user = FactoryBot.create(:user)
+      info_request = FactoryBot.create(:info_request, :user => user)
+      response_event = FactoryBot.create(:response_event,
                                           :info_request => info_request)
-      comment_event = FactoryGirl.create(:comment_event,
+      comment_event = FactoryBot.create(:comment_event,
                                          :info_request => info_request)
-      resent_event = FactoryGirl.create(:resent_event,
+      resent_event = FactoryBot.create(:resent_event,
                                         :info_request => info_request)
       list = described_class.new(user, 1, 2)
       expect(list.current_items.first).

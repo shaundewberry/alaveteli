@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe "followups/_followup.html.erb" do
   it "renders the normal title partial when the request is not embargoed" do
-    info_request = FactoryGirl.create(:info_request)
+    info_request = FactoryBot.create(:info_request)
     assign :info_request, info_request
     assign :internal_review, false
     assign :outgoing_message, OutgoingMessage.new(info_request: info_request)
@@ -14,7 +14,7 @@ describe "followups/_followup.html.erb" do
   end
 
   it "renders the pro title partial when the request is embargoed" do
-    info_request = FactoryGirl.create(:embargoed_request)
+    info_request = FactoryBot.create(:embargoed_request)
     assign :info_request, info_request
     assign :internal_review, false
     assign :outgoing_message, OutgoingMessage.new(info_request: info_request)

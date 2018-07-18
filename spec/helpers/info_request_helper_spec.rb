@@ -6,7 +6,7 @@ describe InfoRequestHelper do
   include InfoRequestHelper
 
   describe '#status_text' do
-    let(:info_request) { FactoryGirl.create(:info_request) }
+    let(:info_request) { FactoryBot.create(:info_request) }
 
     it 'requires an info_request argument' do
       expect { status_text }.to raise_error(ArgumentError)
@@ -441,7 +441,7 @@ describe InfoRequestHelper do
 
       context 'external request' do
         it_behaves_like "when we can't ask the user to update the status" do
-          let(:info_request) { FactoryGirl.create(:external_request, awaiting_description: true) }
+          let(:info_request) { FactoryBot.create(:external_request, awaiting_description: true) }
           let(:message) do
             status_text(info_request,
                         :new_responses_count => 1,
@@ -504,10 +504,10 @@ describe InfoRequestHelper do
   end
 
   describe '#attachment_link' do
-    let(:incoming_message){ FactoryGirl.create(:incoming_message) }
+    let(:incoming_message){ FactoryBot.create(:incoming_message) }
 
     context 'if an icon exists for the filetype' do
-      let(:jpeg_attachment){ FactoryGirl.create(:jpeg_attachment,
+      let(:jpeg_attachment){ FactoryBot.create(:jpeg_attachment,
                               :incoming_message => incoming_message,
                               :url_part_number => 1)
                            }
@@ -521,7 +521,7 @@ describe InfoRequestHelper do
     end
 
     context 'if no icon exists for the filetype' do
-      let(:unknown_attachment){ FactoryGirl.create(:unknown_attachment,
+      let(:unknown_attachment){ FactoryBot.create(:unknown_attachment,
                                   :incoming_message => incoming_message,
                                   :url_part_number => 1)
                               }
@@ -536,8 +536,8 @@ describe InfoRequestHelper do
   end
 
   describe '#attachment_path' do
-    let(:incoming_message){ FactoryGirl.create(:incoming_message) }
-    let(:jpeg_attachment){ FactoryGirl.create(:jpeg_attachment,
+    let(:incoming_message){ FactoryBot.create(:incoming_message) }
+    let(:jpeg_attachment){ FactoryBot.create(:jpeg_attachment,
                              :incoming_message => incoming_message,
                              :url_part_number => 1)
                          }

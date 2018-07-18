@@ -126,7 +126,7 @@ describe OutgoingMailer, "when working out follow up subjects" do
 
     it "prefixes the subject of the message with 'Internal review of " \
           "Freedom of Information request'" do
-      request = FactoryGirl.create(:info_request_with_internal_review_request,
+      request = FactoryBot.create(:info_request_with_internal_review_request,
                                    :title => "Test")
       expect(OutgoingMailer.subject_for_followup(
         request,
@@ -135,7 +135,7 @@ describe OutgoingMailer, "when working out follow up subjects" do
     end
 
     it "does not add HTMLEntities to the subject of the message" do
-      request = FactoryGirl.create(:info_request_with_internal_review_request,
+      request = FactoryBot.create(:info_request_with_internal_review_request,
                                    :title => "Apostrophe's Test")
       expect(OutgoingMailer.subject_for_followup(
         request,

@@ -2,9 +2,9 @@
 require File.expand_path(File.join('..', '..', '..', 'spec_helper'), __FILE__)
 
 describe "request_mailer/overdue_alert" do
-  let(:body) { FactoryGirl.create(:public_body, :name => "Apostrophe's") }
+  let(:body) { FactoryBot.create(:public_body, :name => "Apostrophe's") }
   let(:request) do
-    FactoryGirl.create(:info_request,
+    FactoryBot.create(:info_request,
                        :public_body => body,
                        :title => "Request apostrophe's data")
   end

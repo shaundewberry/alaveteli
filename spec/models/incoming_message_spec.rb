@@ -29,14 +29,14 @@ describe IncomingMessage do
   describe '#valid_to_reply_to' do
 
     it 'is true if _calculate_valid_to_reply_to is true' do
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       allow(message).to receive(:_calculate_valid_to_reply_to).and_return(true)
       message.parse_raw_email!(true)
       expect(message.valid_to_reply_to).to eq(true)
     end
 
     it 'is false if _calculate_valid_to_reply_to is false' do
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       allow(message).to receive(:_calculate_valid_to_reply_to).and_return(false)
       message.parse_raw_email!(true)
       expect(message.valid_to_reply_to).to eq(false)
@@ -47,7 +47,7 @@ describe IncomingMessage do
   describe '#valid_to_reply_to?' do
 
     it 'returns the value of #valid_to_reply_to' do
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       expect(message.valid_to_reply_to?).to eq(message.valid_to_reply_to)
     end
 
@@ -63,7 +63,7 @@ describe IncomingMessage do
       Hello, World
       EOF
 
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       message.raw_email.data = raw_email_data
       message.parse_raw_email!(true)
       expect(message.mail_from).to eq('FOI Person')
@@ -77,7 +77,7 @@ describe IncomingMessage do
       Hello, World
       EOF
 
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       message.raw_email.data = raw_email_data
       message.parse_raw_email!(true)
       expect(message.mail_from).to be_nil
@@ -92,7 +92,7 @@ describe IncomingMessage do
       Hello, World
       EOF
 
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       message.raw_email.data = raw_email_data
       message.parse_raw_email!(true)
       expect(message.mail_from).
@@ -111,10 +111,10 @@ describe IncomingMessage do
       Hello, World
       EOF
 
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       message.raw_email.data = raw_email_data
       message.parse_raw_email!(true)
-      FactoryGirl.create(:censor_rule,
+      FactoryBot.create(:censor_rule,
                          :text => 'Person',
                          :info_request => message.info_request)
 
@@ -133,7 +133,7 @@ describe IncomingMessage do
       Hello, World
       EOF
 
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       message.raw_email.data = raw_email_data
       message.parse_raw_email!(true)
       expect(message.mail_from_domain).to eq('mail.example.com')
@@ -146,7 +146,7 @@ describe IncomingMessage do
       Hello, World
       EOF
 
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       message.raw_email.data = raw_email_data
       message.parse_raw_email!(true)
       expect(message.mail_from_domain).to eq('')
@@ -164,7 +164,7 @@ describe IncomingMessage do
       Hello, World
       EOF
 
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       message.raw_email.data = raw_email_data
       message.parse_raw_email!(true)
       expect(message.subject).to eq('A response')
@@ -177,7 +177,7 @@ describe IncomingMessage do
       Hello, World
       EOF
 
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       message.raw_email.data = raw_email_data
       message.parse_raw_email!(true)
       expect(message.subject).to be_nil
@@ -191,7 +191,7 @@ describe IncomingMessage do
       Hello, World
       EOF
 
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       message.raw_email.data = raw_email_data
       message.parse_raw_email!(true)
       expect(message.subject).to eq('Câmara Responde:  Banco de ideias')
@@ -210,7 +210,7 @@ describe IncomingMessage do
       Hello, World
       EOF
 
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       message.raw_email.data = raw_email_data
       message.parse_raw_email!(true)
       expect(message.sent_at).
@@ -225,7 +225,7 @@ describe IncomingMessage do
       Hello, World
       EOF
 
-      message = FactoryGirl.create(:incoming_message)
+      message = FactoryBot.create(:incoming_message)
       message.raw_email.data = raw_email_data
       message.parse_raw_email!(true)
       expect(message.sent_at).to eq(message.created_at)
@@ -317,7 +317,7 @@ describe IncomingMessage do
   describe '#get_body_for_quoting' do
 
     it 'does not incorrectly cache without the FOLDED_QUOTED_SECTION marker' do
-      message = FactoryGirl.create(:plain_incoming_message)
+      message = FactoryBot.create(:plain_incoming_message)
       message.get_body_for_quoting
       expect(message.get_main_body_text_folded).
         to include('FOLDED_QUOTED_SECTION')
@@ -328,8 +328,8 @@ describe IncomingMessage do
   describe '#get_attachment_text_full' do
 
     it 'strips null bytes from the extracted clipped text' do
-      message = FactoryGirl.create(:incoming_message)
-      FactoryGirl.
+      message = FactoryBot.create(:incoming_message)
+      FactoryBot.
         create(:body_text, :body => "hi\u0000", :incoming_message => message)
       expect(message.get_attachment_text_clipped).to eq("hi\n\n")
     end
@@ -340,12 +340,12 @@ describe IncomingMessage do
 
     it 'does not generate incompatible character encodings' do
       if String.respond_to?(:encode)
-        message = FactoryGirl.create(:incoming_message)
-        FactoryGirl.create(:body_text,
+        message = FactoryBot.create(:incoming_message)
+        FactoryBot.create(:body_text,
                            :body => 'hí',
                            :incoming_message => message,
                            :url_part_number => 2)
-        FactoryGirl.create(:pdf_attachment,
+        FactoryBot.create(:pdf_attachment,
                            :body => load_file_fixture('pdf-with-utf8-characters.pdf'),
                            :incoming_message => message,
                            :url_part_number => 3)
@@ -393,11 +393,11 @@ describe IncomingMessage, 'when getting a response event' do
 end
 
 describe IncomingMessage, "when the prominence is changed" do
-  let(:request) { FactoryGirl.create(:info_request) }
+  let(:request) { FactoryBot.create(:info_request) }
 
   it "updates the info_request's last_public_response_at to nil when hidden" do
-    im = FactoryGirl.create(:incoming_message, :info_request => request)
-    response_event = FactoryGirl.
+    im = FactoryBot.create(:incoming_message, :info_request => request)
+    response_event = FactoryBot.
                       create(:info_request_event, :event_type => 'response',
                                                   :info_request => request,
                                                   :incoming_message => im)
@@ -408,9 +408,9 @@ describe IncomingMessage, "when the prominence is changed" do
 
   it "updates the info_request's last_public_response_at to a timestamp \
       when unhidden" do
-    im = FactoryGirl.create(:incoming_message, :prominence => 'hidden',
+    im = FactoryBot.create(:incoming_message, :prominence => 'hidden',
                                                :info_request => request)
-    response_event = FactoryGirl.
+    response_event = FactoryBot.
                       create(:info_request_event, :event_type => 'response',
                                                   :info_request => request,
                                                   :incoming_message => im)
@@ -423,7 +423,7 @@ describe IncomingMessage, "when the prominence is changed" do
 end
 
 describe 'when destroying a message' do
-  let(:incoming_message) { FactoryGirl.create(:plain_incoming_message) }
+  let(:incoming_message) { FactoryBot.create(:plain_incoming_message) }
 
   it 'destroys the incoming message' do
     incoming_message.destroy
@@ -441,7 +441,7 @@ describe 'when destroying a message' do
   end
 
   it 'should nullify outgoing_message_followups' do
-    outgoing_message = FactoryGirl.
+    outgoing_message = FactoryBot.
                          create(:initial_request,
                                 :info_request => incoming_message.info_request,
                                 :incoming_message_followup_id => incoming_message.id)
@@ -462,7 +462,7 @@ describe 'when destroying a message' do
 
   context 'with attachments' do
     let(:incoming_with_attachment) {
-      FactoryGirl.create(:incoming_message_with_html_attachment)
+      FactoryBot.create(:incoming_message_with_html_attachment)
     }
 
     it 'destroys the incoming message' do
@@ -1090,7 +1090,7 @@ end
 describe IncomingMessage, 'when getting clipped attachment text' do
 
   it 'should clip to characters not bytes' do
-    incoming_message = FactoryGirl.build(:incoming_message)
+    incoming_message = FactoryBot.build(:incoming_message)
     # This character is 2 bytes so the string should get sliced unless
     # we are handling multibyte chars correctly
     multibyte_string = "å" * 500002
@@ -1105,7 +1105,7 @@ describe IncomingMessage, 'when getting the main body text' do
   context 'when the main body text is more than 1MB' do
 
     before do
-      @incoming_message = FactoryGirl.create(:incoming_message)
+      @incoming_message = FactoryBot.create(:incoming_message)
       allow(@incoming_message).to receive(:get_main_body_text_internal).
         and_return("x" * 1000010)
     end
