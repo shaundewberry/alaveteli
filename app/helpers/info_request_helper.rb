@@ -53,7 +53,7 @@ module InfoRequestHelper
                        simple_date(info_request.date_response_required_by))
     str += ' '
     str += "("
-    str += link_to _("details"), "/help/requesting#quickly_response"
+    str += details_help_link(info_request.public_body)
     str += ")."
   end
 
@@ -76,8 +76,7 @@ module InfoRequestHelper
                        simple_date(info_request.date_response_required_by))
     str += ' '
     str += "("
-    str += link_to _('details'),
-                   help_requesting_path(:anchor => 'quickly_response')
+    str += details_help_link(info_request.public_body)
     str += ")"
   end
 
@@ -95,8 +94,7 @@ module InfoRequestHelper
     end
     str += ' '
     str += "("
-    str += link_to _('details'),
-                   help_requesting_path(:anchor => 'quickly_response')
+    str += details_help_link(info_request.public_body)
     str += ")."
 
     unless info_request.is_external?
@@ -272,6 +270,14 @@ module InfoRequestHelper
       get_attachment_as_html_path(attach_params)
     else
       get_attachment_path(attach_params)
+    end
+  end
+
+  def details_help_link(public_body)
+    if public_body.not_subject_to_law?
+      link_to _('details'), help_requesting_path(:anchor => 'authorities')
+    else
+      link_to _('details'), help_requesting_path(:anchor => 'quickly_response')
     end
   end
 
