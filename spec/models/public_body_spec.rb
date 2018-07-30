@@ -735,14 +735,14 @@ describe PublicBody do
 
   describe '#not_subject_to_law?' do
 
-    it 'returns true if tagged with "no_foi"' do
-      public_body = FactoryGirl.create(:public_body,
-                                       tag_string: 'foi_no')
+    it 'returns true if tagged with "foi_no"' do
+      public_body = FactoryGirl.build(:public_body,
+                                      tag_string: 'foi_no')
       expect(public_body.not_subject_to_law?).to eq true
     end
 
-    it 'returns false if not tagged with "no_foi"' do
-      public_body = FactoryGirl.create(:public_body)
+    it 'returns false if not tagged with "foi_no"' do
+      public_body = FactoryGirl.build(:public_body)
       expect(public_body.not_subject_to_law?).to eq false
     end
 
