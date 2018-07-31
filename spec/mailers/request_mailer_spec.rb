@@ -588,6 +588,30 @@ describe RequestMailer do
       end
     end
 
+    it 'does not include "by law" phrasing if the authority is not subject to FOI law' do
+      @kitten_request.public_body.add_tag_if_not_already_present('foi_no')
+      time_travel_to(31.days.from_now) do
+        RequestMailer.alert_overdue_requests
+        mail = kitten_mails[0]
+
+        expect(mail.body).not_to match(/by law/)
+      end
+    end
+
+    context 'the request is very overdue' do
+
+      it 'does not include "to law" phrasing if the authority is not subject to FOI law' do
+        @kitten_request.public_body.add_tag_if_not_already_present('foi_no')
+        time_travel_to(61.days.from_now) do
+          RequestMailer.alert_overdue_requests
+          mail = kitten_mails[0]
+
+          expect(mail.body).not_to match(/by law/)
+        end
+      end
+
+    end
+
     it "does not send the alert if the user is banned but records it as sent" do
       time_travel_to(31.days.from_now) do
         user = @kitten_request.user
