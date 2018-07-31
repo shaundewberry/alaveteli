@@ -726,6 +726,12 @@ describe NotificationMailer do
       expected_message.gsub!(/INFO_REQUEST_ID/, info_request.id.to_s)
       expect(mail.body.encoded).to eq(expected_message)
     end
+
+    it 'does not include "by law" in the message if the authority is not subject to FOI law' do
+      info_request.public_body.add_tag_if_not_already_present('foi_no')
+      mail = NotificationMailer.overdue_notification(notification)
+      expect(mail.body.encoded).not_to match(/by law/)
+    end
   end
 
   describe '#very_overdue_notification' do
@@ -796,6 +802,12 @@ describe NotificationMailer do
         "notification_mailer/very_overdue.txt", 'r:utf-8')
       expected_message.gsub!(/INFO_REQUEST_ID/, info_request.id.to_s)
       expect(mail.body.encoded).to eq(expected_message)
+    end
+
+    it 'does not include "by law" in the message if the authority is not subject to FOI law' do
+      info_request.public_body.add_tag_if_not_already_present('foi_no')
+      mail = NotificationMailer.very_overdue_notification(notification)
+      expect(mail.body.encoded).not_to match(/by law/)
     end
   end
 
